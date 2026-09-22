@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
+#include <stdio.h>
 
 int	is_number(const char *str)
 {
@@ -78,34 +79,33 @@ int	has_duplicate(long *values, int count)
 	}
 	return (0);
 }
-//#include <stdio.h>
 
-// int	main(int argc, char **argv)
-// {
-// 	int		i;
-// 	long	value[argc];
+int	main(int argc, char **argv)
+{
+	int		i;
+	long	value[argc];
 
-// 	i = 0;
-// 	while (i + 1 < argc)
-// 	{
-// 		if (is_number(argv[i + 1]) == 0)
-// 		{
-// 			printf("%s -> Error (no es un numero)\n", argv[i + 1]);
-// 			return (1);
-// 		}
-// 		value[i] = str_to_long(argv[i + 1]);
-// 		if (fits_in_int(value[i]) == 0)
-// 		{
-// 			printf("%s -> Error (no cabe en un int)\n", argv[i + 1]);
-// 			return (1);
-// 		}
-// 		if (has_duplicate(value, i + 1) == 1)
-// 		{
-// 			printf("%s -> Error (duplicado)\n", argv[i + 1]);
-// 			return (1);
-// 		}
-// 		printf("%s -> valido\n", argv[i + 1]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	while (i + 1 < argc)
+	{
+		if (is_number(argv[i + 1]) == 0)
+		{
+			printf("%s -> Error (no es un numero)\n", argv[i + 1]);
+			return (1);
+		}
+		value[i] = str_to_long(argv[i + 1]);
+		if (fits_in_int(value[i]) == 0)
+		{
+			printf("%s -> Error (no cabe en un int)\n", argv[i + 1]);
+			return (1);
+		}
+		if (has_duplicate(value, i + 1) == 1)
+		{
+			printf("%s -> Error (duplicado)\n", argv[i + 1]);
+			return (1);
+		}
+		printf("%s -> valido\n", argv[i + 1]);
+		i++;
+	}
+	return (0);
+}
