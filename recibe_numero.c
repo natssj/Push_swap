@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 //---------------------------Creación de listas
 typedef struct s_node
 {
 	int				value;
 	int				index; //posición que quedaría al ordenaarlo entero
 	struct s_node	*next;
+	struct s_node	*prev; //nodo anterior
 }	t_node;
 
 typedef struct s_stack
@@ -35,7 +37,8 @@ t_node	*new_node(int value, int index)
 		return (NULL);
 	node->value = value;
 	node->index = index;
-	node->next = NULL; //crea el nodo sin enlazarse a ninguno
+	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -43,11 +46,32 @@ void	stack_add_front(t_stack *stack, t_node *node)
 {
 	if (!stack || !node)
 		return ;
-	node->next = stack->top; //nodo nuevo apunta al principio
+	node->next = stack->top;
+	node->prev = NULL;
+	if (stack->top)
+		stack->top->prev = node; //el nodo que era el primero apunta al nuevo primero
 	stack->top = node;
-	if (stack->size == 0) //si el stack estaba vacio top y bot son el mismo
+	if (stack->size == 0)
 		stack->bot = node;
 	stack->size++;
+}
+
+t_node	*stack_del_front(t_stack *stack)
+{
+	t_node	*node;
+
+	if (!stack || !stack->top)
+		return (NULL);
+	node = stack->top;
+	stack->top = stack->top->next;
+	if (stack->top)
+		stack->top->prev = NULL;
+	else
+		stack->bot = NULL;
+	stack->size--;
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
 }
 
 void	stack_add_back(t_stack *stack, t_node *node)
@@ -55,7 +79,8 @@ void	stack_add_back(t_stack *stack, t_node *node)
 	if (!stack || !node)
 		return ;
 	node->next = NULL;
-	if (stack->size == 0) //si el stack estaba vacio top y bot son el mismo
+	node->prev = stack->bot;
+	if (stack->size == 0)
 	{
 		stack->top = node;
 		stack->bot = node;
@@ -79,7 +104,6 @@ void	free_list(t_node *head)
 		head = tmp;
 	}
 }
-//---------------------------Consultas
 
 int	is_sorted(t_stack *stack) //valida que el stack esté ordenado
 {
@@ -96,22 +120,162 @@ int	is_sorted(t_stack *stack) //valida que el stack esté ordenado
 	}
 	return (1);
 }
-t_node	*stack_pop_front(t_stack *stack) //quita el primer nodo
+
+//----------------------------- Operaciones
+
+//pa -> quita el primer nodo de B y lo coloca como primero de A
+void	pa(t_stack *a, t_stack *b)  //del front (B) + add_front (A)
 {
 	t_node	*node;
 
-	if (!stack || !stack->top)
-		return (NULL);
-	node = stack->top;
-	stack->top = stack->top->next; //el que era el segundo pasa a ser top
-	if (!stack->top)
-		stack->bot = NULL; //si al quitar top se vacia, bot es NULL pq no apunta a nada
-	stack->size--;
-	node->next = NULL;
-	return (node);
+	if (b->size == 0)
+		return ;
+	node = stack_del_front(b);
+	stack_add_front(a, node);
+	printf("pa\n");
 }
 
-#include <stdio.h>
+void	pb(t_stack *a, t_stack *b)
+{
+	t_node	*node;
+
+	if (a->size == 0)
+		return ;
+	node = stack_del_front(a);
+	stack_add_front(b, node);
+	printf("pb\n");
+}
+
+//sa -> intercambia los dos primeros elementos del stack
+
+void	sa(t_stack *a)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if (a->size < 2)
+		return ;
+	first = a->top; 		//guarda la referencia
+	second = a->top->next;
+	first->next = second->next;
+	second->next = first;
+	second->prev = NULL;
+	first->prev = second;
+	if (first->next)//Si hay un tercer nodo
+		first->next->prev = first; //Ese tercero ahora tiene a first como prev
+	a->top = second; //se actualiza el top
+	if (a->size == 2)
+		a->bot = first; //en este caso específico se actualiza bot también
+}
+
+void	sa_print(t_stack *a)
+{
+	sa(a);
+	printf("sa\n");
+}
+
+void	sb(t_stack *b)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if (b->size < 2)
+		return ;
+	first = b->top;
+	second = b->top->next;
+	first->next = second->next;
+	second->next = first;
+	second->prev = NULL;
+	first->prev = second;
+	if (first->next)
+		first->next->prev = first;
+	b->top = second;
+	if (b->size == 2)
+		b->bot = first;
+}
+
+void	sb_print(t_stack *b)
+{
+	sb(b);
+	printf("sb\n");
+}
+
+void	ss(t_stack *a, t_stack *b) //sa y sb a la vez
+{
+	sa(a);
+	sb(b);
+	printf("ss\n");//se separan los printf porque se tiene que ver ss al usarla, no "sa" "sb"
+}
+
+//ra -> pasa el primer elemento al último (de top a bot), todo sube una posición
+
+void	ra(t_stack *a)
+{
+	t_node	*first;
+
+	if (a->size < 2)
+		return ;
+	first = a->top;  //fist es lo que era el primer nodo
+	a->top = a->top->next;  //top pasa a ser el que era segundo
+	a->top->prev = NULL;
+	a->bot->next = first; //bot pasa a ser el que era primero (como a->top ha cambiado, first es el nodo buscado)
+	first->prev = a->bot;
+	first->next = NULL; //al estar al final no apunta a nada mas (NULL)
+	a->bot = first; //se actualiza bot
+}
+
+void	ra_print(t_stack *a)
+{
+	ra(a);
+	printf("ra\n");
+}
+
+void	rb(t_stack *b)
+{
+	t_node	*first;
+
+	if (b->size < 2)
+		return ;
+	first = b->top;
+	b->top = b->top->next;
+	b->top->prev = NULL;  //el nuevo top no tiene prev
+	b->bot->next = first;
+	first->prev = b->bot; //first (movido al final) apunta al viejo bot
+	first->next = NULL;
+	b->bot = first;
+}
+
+void	rb_print(t_stack *b)
+{
+	rb(b);
+	printf("rb\n");
+}
+
+void	rr(t_stack *a, t_stack *b)
+{
+	ra(a);
+	rb(b);
+	printf("rr\n");
+}
+
+//rra -> el último pasa a ser el primero, (todo baja una posición)
+
+void	rra(t_stack *a)
+{
+	t_node	*last;
+
+	if (a->size < 2)
+		return ;
+	last = a->bot;
+	a->bot-> ???;
+	a->top = last;
+}
+
+void	ra_print(t_stack *a)
+{
+	ra(a);
+	printf("ra\n");
+}
 
 int	main(int argc, char **argv)
 {
