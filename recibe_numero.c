@@ -267,14 +267,46 @@ void	rra(t_stack *a)
 	if (a->size < 2)
 		return ;
 	last = a->bot;
-	a->bot-> ???;
+	a->bot = a->bot->prev;
+	a->bot->next = NULL;
+	last->next = a->top;
+	a->top->prev = last;
+	last->prev = NULL;
 	a->top = last;
 }
 
-void	ra_print(t_stack *a)
+void	rra_print(t_stack *a)
 {
-	ra(a);
-	printf("ra\n");
+	rra(a);
+	printf("rra\n");
+}
+
+void	rrb(t_stack *b)
+{
+	t_node	*last;
+
+	if (b->size < 2)
+		return ;
+	last = b->bot;
+	b->bot = b->bot->prev;
+	b->bot->next = NULL;
+	last->next = b->top;
+	b->top->prev = last;
+	last->prev = NULL;
+	b->top = last;
+}
+
+void	rrb_print(t_stack *b)
+{
+	rrb(b);
+	printf("rrb\n");
+}
+
+void	rrr(t_stack *a, t_stack *b)
+{
+	rra(a);
+	rrb(b);
+	printf("rrr\n");
 }
 
 int	main(int argc, char **argv)
