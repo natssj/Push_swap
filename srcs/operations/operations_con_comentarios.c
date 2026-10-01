@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//en esta version no estan los contadores de --bench
 //pa -> quita el primer nodo de B y lo coloca como primero de A
 void	pa(t_stack *a, t_stack *b)  //del front (B) + add_front (A)
 {
