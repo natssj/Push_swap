@@ -6,13 +6,13 @@
 /*   By: marbecer <marbecer@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 11:29:59 by marbecer          #+#    #+#             */
-/*   Updated: 2026/10/01 17:20:38 by marbecer         ###   ########.fr       */
+/*   Updated: 2026/10/05 19:10:35 by marbecer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "recibe_numero.c"
 //encontrar el valor minimo en b
-int	min(t_stack *b)
+int	get_min(t_stack *b)
 {
 	t_node	*p;
 	int	min;
@@ -30,7 +30,7 @@ int	min(t_stack *b)
 	return (min);
 }
 //encontrar el valor maximo en b.
-int	max(t_stack *b)
+int	get_max(t_stack *b)
 {
 	t_node	*p;
 	int	max;
@@ -55,15 +55,32 @@ int	find_position(t_node value, t_stack *a, t_stack *b)
 	
 }
 
-aaaaaaaaaaaaaaaaa no se cmo hacerloooooooooo pero era buscar entre min y max donde va el numero de a
-para pasarlo a b de forma ordenada, el b es el que va haciendo rb y rrb, 
-y luego todo push a para pasarlo a a, por lo que el stack b queda de mayor a menor, 
-el a de menor a mayor. 
-aaaaaaaaaaaaaaaAAA
+
 
 
 void	insertion(t_stack *a, t_stack *b)
 {
-	void	*tmp;
-
+	int min;
+	int max;
+	//incializar
+	pb(a, b);
+	pb(a, b);
+	while (a != NULL)
+	{
+		min = get_max(b);
+		max = get_max(b);
+		//caso 1 nuevo min
+		if (a -> top -> value < min)
+			pb(a, b);
+		//caso 2 nuevo max
+		if (a -> top -> value > max)
+			pb()
+		//caso 3 intermedio
+		if (entre min y max)
+			find_position(a -> top, a, b)
+	}
+	while(b -> top != max)
+		rb o rrb
+	while(b != NULL)
+		pa(a, b);
 }
