@@ -6,12 +6,12 @@
 /*   By: marbecer <marbecer@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 11:29:59 by marbecer          #+#    #+#             */
-/*   Updated: 2026/10/05 19:10:35 by marbecer         ###   ########.fr       */
+/*   Updated: 2026/10/06 17:42:03 by marbecer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "recibe_numero.c"
-//encontrar el valor minimo en b
+
 int	get_min(t_stack *b)
 {
 	t_node	*p;
@@ -24,12 +24,11 @@ int	get_min(t_stack *b)
 	while (p)
 	{
 		if (p->value < min)
-		min = p -> value;
+			min = p -> value;
 		p = p -> next;
 	}
 	return (min);
 }
-//encontrar el valor maximo en b.
 int	get_max(t_stack *b)
 {
 	t_node	*p;
@@ -42,45 +41,63 @@ int	get_max(t_stack *b)
 	while (p)
 	{
 		if (p->value < max)
-		max = p -> value;
+			max = p -> value;
 		p = p -> next;
 	}
 	return (max);
 }
 // va a mirar en que "hueco" va el numero
-int	find_position(t_node value, t_stack *a, t_stack *b)
+int	get_pos(t_stack *b, int value_a)
 {
 	t_node	*p;
-	int pos; 
 	
+	if (value_a > get_max(b) || value_a < get_min(b))
+	return (get_max(b));
+	p = b -> top;
+	while(p && p -> next)
+	{
+		if (p -> value > value_a && p -> next -> value < value_a)
+			return(p -> next ->value);
+		p = p ->next;
+	}
+	return (get_max);
 }
 
+int	rt(t_stack *b, int value_)
+{
+	int	pos;
 
+	pos = get_pos(b, value_);
+	if (pos <= b-> size / 2 )
+	{
+		while(b -> top -> value != value_)
+			rb(b);
+	}
+	else
+	{
+		while (b ->top->value != value_)
+			rrb(b);
+	}
+}
 
 
 void	insertion(t_stack *a, t_stack *b)
 {
-	int min;
-	int max;
-	//incializar
+	int	pos;
 	pb(a, b);
 	pb(a, b);
+	if (b -> top -> value < b -> top -> next -> value)
+		sb(b);
 	while (a != NULL)
 	{
-		min = get_max(b);
-		max = get_max(b);
-		//caso 1 nuevo min
-		if (a -> top -> value < min)
-			pb(a, b);
-		//caso 2 nuevo max
-		if (a -> top -> value > max)
-			pb()
-		//caso 3 intermedio
-		if (entre min y max)
-			find_position(a -> top, a, b)
+		pos = get_pos(b, a -> top -> value);
+		while(b ->top ->value != pos)
+		{
+			count()
+		}
 	}
-	while(b -> top != max)
-		rb o rrb
+	while(b -> top != get_max(b))
+		rb(b);
 	while(b != NULL)
 		pa(a, b);
 }
