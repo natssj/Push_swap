@@ -17,7 +17,7 @@
 # include <stdio.h>
 #include <limits.h>
 
-// Estructuras
+//structs
 
 typedef struct s_node
 {
@@ -66,7 +66,7 @@ t_node	*stack_del_front(t_stack *stack);
 void	free_list(t_node *head);
 int		is_sorted(t_stack *stack);
 
-//Operaciones
+//operations
 
 void	pa(t_stack *a, t_stack *b, t_op_count *ope);
 void	pb(t_stack *a, t_stack *b, t_op_count *ope);
@@ -93,5 +93,18 @@ void	rrr(t_stack *a, t_stack *b, t_op_count *ope);
 double	disorder(t_stack *a);
 void	print_strategy_info(t_strategy strat);
 void	print_bench(double disorder, t_strategy strat, t_op_count *ope);
+
+//algorithms
+
+//medium
+int		chunk_size(int n);
+int		in_chunk(t_node *node, int chunk, int size);
+int		count_in_chunk(t_stack *a, int chunk, int size);
+int		find_t_pos(t_stack *b, int x_index);
+int		find_max_pos(t_stack *b);
+void	rotate_b_to_pos(t_stack *b, int pos, t_op_count *ope);
+void	insert_in_b(t_stack *a, t_stack *b, t_op_count *ope);
+void	return_to_a(t_stack *a, t_stack *b, t_op_count *ope);
+void	chunk_sort(t_stack *a, t_stack *b, t_op_count *ope);
 
 #endif
