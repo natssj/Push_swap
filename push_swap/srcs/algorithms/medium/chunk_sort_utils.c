@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-//calcular tamaño del chunk (√n)
 int	chunk_size(int n)
 {
 	int	i;
@@ -25,13 +24,11 @@ int	chunk_size(int n)
 	return (i);
 }
 
-//saber si un nodo pertenece al chunk actual
 int	in_chunk(t_node *node, int chunk, int size)
 {
 	return (node->index / size == chunk);
 }
 
-//encontrar t
 int	find_t_pos(t_stack *b, int x_index)
 {
 	t_node	*cur;
@@ -58,7 +55,6 @@ int	find_t_pos(t_stack *b, int x_index)
 	return (find_max_pos(b));
 }
 
-//si el indice a insertar es menor que los que ya están, t es el mayor
 int	find_max_pos(t_stack *b)
 {
 	t_node	*cur;
@@ -83,7 +79,6 @@ int	find_max_pos(t_stack *b)
 	return (max_pos);
 }
 
-//buscar el camino mas corto
 void	rotate_b_to_pos(t_stack *b, int pos, t_op_count *ope)
 {
 	if (pos <= b->size / 2)
