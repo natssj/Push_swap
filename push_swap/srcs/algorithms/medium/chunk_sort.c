@@ -23,7 +23,6 @@ void	insert_in_b(t_stack *a, t_stack *b, t_op_count *ope)
 	pb(a, b, ope);
 }
 
-//deja el mayor de b arriba y lo devuelve todo a a
 void	return_to_a(t_stack *a, t_stack *b, t_op_count *ope)
 {
 	rotate_b_to_pos(b, find_max_pos(b), ope);
@@ -31,7 +30,6 @@ void	return_to_a(t_stack *a, t_stack *b, t_op_count *ope)
 		pa(a, b, ope);
 }
 
-//cuantos nodos de a quedan por procesar en este chunk
 int	count_in_chunk(t_stack *a, int chunk, int size)
 {
 	t_node	*cur;
@@ -48,7 +46,6 @@ int	count_in_chunk(t_stack *a, int chunk, int size)
 	return (count);
 }
 
-//funcion principal l.61 numero del ultimo chunk index -1 para saber el numero mas alto/size para saber a que chunk pertenece el numero mas alto
 void	chunk_sort(t_stack *a, t_stack *b, t_op_count *ope)
 {
 	int	size;
