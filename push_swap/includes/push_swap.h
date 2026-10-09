@@ -19,7 +19,6 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-//structs
 typedef enum e_strategy
 {
 	STRAT_SIMPLE,
@@ -73,7 +72,6 @@ typedef struct s_data
 	double		disorder;
 }	t_data;
 
-//stack
 t_node	*new_node(int value, int index);
 void	stack_add_front(t_stack *stack, t_node *node);
 void	stack_add_back(t_stack *stack, t_node *node);
@@ -82,7 +80,6 @@ void	free_list(t_node *head);
 int		is_sorted(t_stack *stack);
 void	assign_indexes(t_stack *stack);
 
-//operations
 void	pa(t_stack *a, t_stack *b, t_op_count *ope);
 void	pb(t_stack *a, t_stack *b, t_op_count *ope);
 
@@ -104,7 +101,6 @@ void	rrb(t_stack *b);
 void	rrb_print(t_stack *b, t_op_count *ope);
 void	rrr(t_stack *a, t_stack *b, t_op_count *ope);
 
-//parsing
 int		is_number(const char *str);
 long	str_to_long(const char *str);
 int		fits_in_int(long value);
@@ -115,20 +111,15 @@ int		get_strategy(char *arg, t_config *cfg);
 int		parsing_flags(int argc, char **argv, t_config *cfg);
 int		parsing_numbers(int argc, char **argv, int start, t_stack *a);
 
-//bench
 double	compute_disorder(t_stack *a);
 void	print_strategy_info(t_strategy strat);
 void	print_bench(double disorder, t_strategy strat, t_op_count *ope);
 
-//algorithms
 
-//adaptive
 t_strategy	choose_strategy(double disorder);
 
-//simple
 void	insertion(t_stack *a, t_stack *b, t_op_count *ope);
 
-//medium
 int		chunk_size(int n);
 int		in_chunk(t_node *node, int chunk, int size);
 int		count_in_chunk(t_stack *a, int chunk, int size);
@@ -139,7 +130,6 @@ void	insert_in_b(t_stack *a, t_stack *b, t_op_count *ope);
 void	return_to_a(t_stack *a, t_stack *b, t_op_count *ope);
 void	chunk_sort(t_stack *a, t_stack *b, t_op_count *ope);
 
-//complex
 void	radix_sort(t_stack *a, t_stack *b, t_op_count *ope);
 
 #endif
